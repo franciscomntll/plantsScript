@@ -1,55 +1,27 @@
 import { useEffect, useState } from "react"
-import { api } from "../api"
-import JSON from '../prueba.json'
-import router from 'next/router'
+
+import MagicBlock from "../components/MagicBlock"
 
 const index = () => {
-    const [ownerID, setOwnerID] = useState()
-    const [plants, setPlants] = useState([])
-    const ScriptPlants = async (token) => {
-        window.open("https://google.com", '_blank');
-        function getRandomInt(min, max) {
-            return Math.floor(Math.random() * (max - min)) + min;
-        }
-
-        const OwnerID = await api.FetchOwner(JSON[getRandomInt(0, JSON?.length)][0], JSON[getRandomInt(0, JSON?.length)][1], token)
-        if(OwnerID) {
-            setOwnerID(OwnerID)
-            const ArrayPlants = await api.ArrayPlants(OwnerID, token)
-            console.log(ArrayPlants)
-            if (ArrayPlants) {
-                ArrayPlants.forEach((item => {
-                    const water = item?.activeTools?.find(item => item?.name?.toLowerCase() == "water")
-                    if (water?.count <= 90) {
-                        const url = `https://marketplace.plantvsundead.com/farm/#/farm/${item._id}`
-                        window.open(url, '_blank');
-                    }
-                }))
-            }
-        } else {
-            console.log("NO HAY OWNERID")
-        }
-
-        }
-
-        useEffect(() => {
-            const interval = setInterval(() => {
-                ScriptPlants("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwdWJsaWNBZGRyZXNzIjoiMHgwOTMyNzAyNjJmZWVmYTkwNGE5YWE5YzNiOWRiMjE3MTVlODAxM2Y1IiwibG9naW5UaW1lIjoxNjI5MDM3MjAyNDA5LCJjcmVhdGVEYXRlIjoiMjAyMS0wOC0xMiAxNTozMToxNSIsImlhdCI6MTYyOTAzNzIwMn0.I7EStjvcha-TAxI6-jFXuxS8WvHWU1FA5myEreQnquM")
-            }, 2000);
-            return () => {
-                clearInterval(interval)
-            }
-        }, [])
+    const [jwt, setJWT] = useState("")
+    
     return (
-        <div>
-            {ownerID}
-            <ul>
-                {plants.map((item, idx) => (
-                    <li>{ }</li>
-                ))}
-            </ul>
+        <div className="max-w-screen-lg mx-auto inset-x-0 py-20 flex flex-col items-center justify-center">
+            <InputField />
+            <MagicBlock />
+            
         </div>
     )
 }
 
 export default index
+
+const InputField = ({onClick}) => {
+    return (
+        <div className="flex flex-col gap-1 items-center justify-center w-1/2">
+        <label className="text-xl" for={"token"}>Ingresa aca tu JSON Web Token</label>
+        <input name={"token"} id="token" type="text" placeholder="Ingresar token JWT" className="border rounded-md pl-5 focus:outline-none focus:ring transition w-full" />
+        <button onClick={onClick} className="bg-blue-500 rounded-md px-6 py-1 text-white font-medium w-full">Enviar</button>
+        </div>
+    )
+}

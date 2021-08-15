@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@fontsource/poppins": "^4.5.0",
     "axios": "^0.21.1",
     "next": "^11.1.0",
     "opn": "^6.0.0",
@@ -11,5 +12,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.3.1",
+    "postcss": "^8.3.6",
+    "tailwindcss": "^2.2.7"
   }
 }
