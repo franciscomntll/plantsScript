@@ -20,22 +20,28 @@ const MagicBlock = () => {
             })
             if (ArrayPlants) {
                 for (let offset = 0; offset < ArrayPlants.total; offset += 20) {
-                    console.log("Hola mundo")
                     const arrPlantsPage = await api.ArrayPlants({
                         ownerID: OwnerID,
-                        token: toke0n,
+                        token: token,
                         offset : offset
                     })
-                    console.log("offset", offset)
-                    console.log(arrPlantsPage)
+
+                    arrPlantsPage?.data?.forEach((item => {
+                        const water = item?.activeTools?.find(item => item?.type?.toLowerCase() == "water")
+                        if (water?.count <= 80) {
+                            const url = `https://marketplace.plantvsundead.com/farm/#/farm/${item._id}`
+                            window.open(url, '_blank');
+                        }
+                    }))
+                    
                 }
-                // ArrayPlants?.forEach((item => {
-                //     const water = item?.activeTools?.find(item => item?.type?.toLowerCase() == "water")
-                //     if (water?.count <= 80) {
-                //         const url = `https://marketplace.plantvsundead.com/farm/#/farm/${item._id}`
-                //         window.open(url, '_blank');
-                //     }
-                // }))
+                 ArrayPlants?.forEach((item => {
+                     const water = item?.activeTools?.find(item => item?.type?.toLowerCase() == "water")
+                     if (water?.count <= 80) {
+                         const url = `https://marketplace.plantvsundead.com/farm/#/farm/${item._id}`
+                         window.open(url, '_blank');
+                     }
+                 }))
             }
         } else {
             console.log("NO HAY OWNERID")
