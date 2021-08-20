@@ -15,14 +15,14 @@ export const api = {
             console.log(error)
         }
     },
-    ArrayPlants: async (ownerID, token) => {
+    ArrayPlants: async ({ownerID, token, limit = 20, offset = 0}) => {
         try {
-            const { data } = await instance.get(`/farms/other/${ownerID}`, {
+            const { data } = await instance.get(`/farms/other/${ownerID}?limit=${limit}&offset=${offset}`, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
             })
-            return data.data || data
+            return data || []
         } catch (error) {
             console.log("ERORR", error)
         }
