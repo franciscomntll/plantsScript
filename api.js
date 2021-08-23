@@ -27,5 +27,12 @@ export const api = {
             console.log("ERORR", error)
         }
     },
+    SavePlants : async (arrPlants) => {
+        try {
+            await axios.post("/api/api", arrPlants)
+        } catch(err) {
+            console.log(err)
+        }
+    }
 }
 

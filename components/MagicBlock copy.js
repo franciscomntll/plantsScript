@@ -26,22 +26,23 @@ const MagicBlock = () => {
                         offset : offset
                     })
 
-                    const arrFinalPlants = arrPlantsPage?.data?.map((item => {
+                    arrPlantsPage?.data?.forEach((item => {
                         const water = item?.activeTools?.find(item => item?.type?.toLowerCase() == "water")
+                        if (water?.count <= 80) {
+                            const url = `https://marketplace.plantvsundead.com/farm/#/farm/${item._id}`
+                            window.open(url, '_blank');
+                        }
                         
                         const date = new Date(water.endTime)
                         const dateStart = new Date(water.startTime)
                         console.log(dateStart, date, item._id)
 
-                        return {
-                            idPlant : item?._id,
-                            startTime : dateStart,
-                            endTime : date,
-                            ownerID : OwnerID
+                        if(item?.hasCrow) {
+                            const url = `https://marketplace.plantvsundead.com/farm/#/farm/${item._id}`
+                            window.open(url, '_blank');
                         }
                     }))
                     
-                    api.SavePlants(arrFinalPlants)
                 }
                 //  ArrayPlants?.forEach((item => {
                 //      const water = item?.activeTools?.find(item => item?.type?.toLowerCase() == "water")
@@ -59,8 +60,7 @@ const MagicBlock = () => {
 
          useEffect(() => {
              //const interval = setInterval(() => {
-                api.SavePlants([{idPlant: "5555"}, {idPlant: "66666"}])
-                 //ScriptPlants("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwdWJsaWNBZGRyZXNzIjoiMHgwOTMyNzAyNjJmZWVmYTkwNGE5YWE5YzNiOWRiMjE3MTVlODAxM2Y1IiwibG9naW5UaW1lIjoxNjI5NjQ4MTM2NjA3LCJjcmVhdGVEYXRlIjoiMjAyMS0wOC0xMiAxNTozMToxNSIsImlhdCI6MTYyOTY0ODEzNn0.dPhS471v3tGm5KTguuwl8U08QwrSKLZI7AnDPgNO0GU")
+                 ScriptPlants("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwdWJsaWNBZGRyZXNzIjoiMHgwOTMyNzAyNjJmZWVmYTkwNGE5YWE5YzNiOWRiMjE3MTVlODAxM2Y1IiwibG9naW5UaW1lIjoxNjI5NjQ4MTM2NjA3LCJjcmVhdGVEYXRlIjoiMjAyMS0wOC0xMiAxNTozMToxNSIsImlhdCI6MTYyOTY0ODEzNn0.dPhS471v3tGm5KTguuwl8U08QwrSKLZI7AnDPgNO0GU")
              //}, 2000);
              return () => {
              //    clearInterval(interval)
